@@ -25,7 +25,15 @@ export class ProblemsService {
   }
 
   findAll() {
-    return `This action returns all problems`;
+    return await this.prisma.problem.findMany ({
+      include: {
+        issueType: true,
+        author: true
+      },
+      orderBy: {
+        createdAr: 'desc'
+      }
+    });
   }
 
   findOne(id: number) {
