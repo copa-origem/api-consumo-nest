@@ -1,15 +1,19 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ProblemsService } from './problems.service';
 import { CreateProblemDto } from './dto/create-problem.dto';
-import { UpdateProblemDto } from './dto/update-problem.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('problems')
 export class ProblemsController {
   constructor(private readonly problemsService: ProblemsService) {}
 
   @Post()
-  create(@Body() createProblemDto: CreateProblemDto) {
-    return this.problemsService.create(createProblemDto);
+  @UseGuards(AuthGuard)
+  create(@Body() createProblemDto: CreateProblemDto, @Req() req) {
+
+    const userId = req.user.id;
+
+    return this.problemsService.create(userId, createProblemDto);
   }
 
   @Get()
