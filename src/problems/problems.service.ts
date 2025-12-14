@@ -1,11 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProblemDto } from './dto/create-problem.dto';
-import { UpdateProblemDto } from './dto/update-problem.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ProblemsService {
-  create(createProblemDto: CreateProblemDto) {
-    return 'This action adds a new problem';
+  constructor(private prisma: PrismaService) {}
+
+  create(userId: string, createProblemDto: CreateProblemDto) {
+    return await this.prisma.problem.create({
+      data: {
+        description: createProblemDto.description,
+        latitude: createProblemDto.latitude,
+        longitude: createProblemDto.longitude,
+        imageUrl: createProblemDto.imageUrl,
+
+        issueType: {
+          connect: { id: createProblemDto.issueTypeId }
+        },
+        author: {
+          connect: { id: userId }
+        }
+      },
+    });
   }
 
   findAll() {
@@ -14,10 +30,6 @@ export class ProblemsService {
 
   findOne(id: number) {
     return `This action returns a #${id} problem`;
-  }
-
-  update(id: number, updateProblemDto: UpdateProblemDto) {
-    return `This action updates a #${id} problem`;
   }
 
   remove(id: number) {
