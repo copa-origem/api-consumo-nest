@@ -6,7 +6,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class ProblemsService {
   constructor(private prisma: PrismaService) {}
 
-  create(userId: string, createProblemDto: CreateProblemDto) {
+  async create(userId: string, createProblemDto: CreateProblemDto) {
     return await this.prisma.problem.create({
       data: {
         description: createProblemDto.description,
@@ -24,14 +24,14 @@ export class ProblemsService {
     });
   }
 
-  findAll() {
+  async findAll() {
     return await this.prisma.problem.findMany ({
       include: {
         issueType: true,
         author: true
       },
       orderBy: {
-        createdAr: 'desc'
+        createdAt: 'desc'
       }
     });
   }
