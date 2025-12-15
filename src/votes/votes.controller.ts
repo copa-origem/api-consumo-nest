@@ -1,15 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { VotesService } from './votes.service';
 import { CreateVoteDto } from './dto/create-vote.dto';
-import { UpdateVoteDto } from './dto/update-vote.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('votes')
 export class VotesController {
   constructor(private readonly votesService: VotesService) {}
 
   @Post()
-  create(@Body() createVoteDto: CreateVoteDto) {
-    return this.votesService.create(createVoteDto);
+  @UseGuards(AuthGuard)
+  create(@Body() createVoteDto: CreateVoteDto, @Req() req) {
+    const userId = req.user.id;
+    return this.votesService.create(userId, createVoteDto);
   }
 
   @Get()
