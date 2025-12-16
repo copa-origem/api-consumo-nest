@@ -16,7 +16,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Alerta Cidadão API')
-    .setDescription('The API to manage the urban problems and comunity vote.')
+    .setDescription('The API to manage urban problems and comunity vote.')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
