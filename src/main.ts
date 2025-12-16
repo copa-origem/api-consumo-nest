@@ -6,7 +6,6 @@ import * as admin from 'firebase-admin'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  //activate the validation
   app.useGlobalPipes(new ValidationPipe());
 
   admin.initializeApp({
