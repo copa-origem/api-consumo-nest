@@ -40,7 +40,7 @@ export class ProblemsService {
     return `This action returns a #${id} problem`;
   }
 
-  async remove (id: string, userId: string) {
+  async remove(id: string, userId: string) {
     const problem = await this.prisma.problem.findUnique({
       where: { id },
     });
@@ -55,14 +55,6 @@ export class ProblemsService {
 
     return await this.prisma.problem.delete({
       where: { id },
-    });
-  }
-
-  async remove(id: string) {
-    return await this.prisma.problem.delete ({
-      where: {
-        id: id,
-      },
     });
   }
 }
