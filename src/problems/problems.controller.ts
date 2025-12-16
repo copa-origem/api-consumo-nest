@@ -27,7 +27,8 @@ export class ProblemsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.problemsService.remove(id);
+  @UseGuards(AuthGuard)
+  remove(@Param('id') id: string, @Req() req) {
+    return this.problemsService.remove(id, req.user.id);
   }
 }
