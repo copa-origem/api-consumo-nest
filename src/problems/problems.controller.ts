@@ -14,6 +14,7 @@ export class ProblemsController {
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Create a new urban problem'})
   @ApiResponse({ status: 201, description: 'problem create with success.'})
+  @ApiResponse({ status: 401, description: 'Unauthorized request'})
   @ApiResponse({ status: 403, description: 'Invalid token or not forneced'})
   create(@Body() createProblemDto: CreateProblemDto, @Req() req) {
 
