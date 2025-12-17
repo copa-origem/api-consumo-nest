@@ -30,7 +30,7 @@ export class ProblemsController {
     return this.problemsService.findAll();
   }
 
-  @Get(':id')
+  @Get('my-problems')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'List only the problems created by user'})
   @ApiResponse({ status: 200, description: 'List returns with success.'})
