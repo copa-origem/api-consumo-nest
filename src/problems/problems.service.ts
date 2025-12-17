@@ -51,6 +51,9 @@ export class ProblemsService {
     return await this.prisma.problem.findMany ({
       where: {
         authorId: id
+      },
+      include: {
+        issueType: true
       }
     });
   }
