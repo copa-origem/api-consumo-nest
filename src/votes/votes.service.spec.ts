@@ -25,27 +25,22 @@ describe('VotesService', () => {
         service = module.get<VotesService>(VotesService);
     });
 
-    it('must delete the problem in three down votes reach', async () => {
+    it('must NOT delete the problem if this problem have only 1 down vote', async () => {
         const userId = 'user-1';
         const problemId = 'prob-1';
         const dto = { problemId, type: VoteType.NON_EXISTENT };
 
         prismaMock.vote.findUnique.mockResolvedValue(null);
-
         prismaMock.vote.create.mockResolvedValue({ id: 'vote-1', ...dto, userId } as any);
 
         prismaMock.problem.update.mockResolvedValue({
             id: problemId,
-            votesNotExistsCount: 3,
+            votesNotExistsCount: 1,
         } as any);
 
         await service.create(userId, dto);
 
-        expect(prismaMock.problem.delete).toHaveBeenCalledWith({
-            where: { id: problemId },
-        });
-
-        expect(prismaMock.problem.delete).toHaveBeenCalledTimes(1);
+        expect(prismaMock.problem.delete).not.toHaveBeenCalled();
     });
 
     it('must NOT delete the problem if this problem have only 2 down votes', async () => {
@@ -65,4 +60,28 @@ describe('VotesService', () => {
 
         expect(prismaMock.problem.delete).not.toHaveBeenCalled();
     });
+
+    it('must delete the problem in three down votes reach', async () => {
+        const userId = 'user-3';
+        const problemId = 'prob-1';
+        const dto = { problemId, type: VoteType.NON_EXISTENT };
+
+        prismaMock.vote.findUnique.mockResolvedValue(null);
+
+        prismaMock.vote.create.mockResolvedValue({ id: 'vote-3', ...dto, userId } as any);
+
+        prismaMock.problem.update.mockResolvedValue({
+            id: problemId,
+            votesNotExistsCount: 3,
+        } as any);
+
+        await service.create(userId, dto);
+
+        expect(prismaMock.problem.delete).toHaveBeenCalledWith({
+            where: { id: problemId },
+        });
+
+        expect(prismaMock.problem.delete).toHaveBeenCalledTimes(1);
+    });
+
 });
