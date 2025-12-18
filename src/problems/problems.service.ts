@@ -90,4 +90,22 @@ export class ProblemsService {
       },
     });
   }
+
+  async update(id: string, userId: string) {
+    const updateProblem = await this.prisma.problem.findUnique({
+      where: {id: id, authorId: userId}
+    });
+
+    if (!updateProblem) {
+      throw new NotFoundException("problem not found.");
+    }
+
+    return await this.prisma.problem.update({
+      where: {id: id, authorId: userId},
+      data: {
+        status: "SOLVED"
+      }
+    })
+
+  }
 }
