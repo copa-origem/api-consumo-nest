@@ -44,9 +44,6 @@ export class ProblemsService {
         take: limit,
         include: {
           issueType: true,
-          author: {
-            select: { id: true, name: true }
-          }
         },
         orderBy: { createdAt: 'desc'}
       }),
