@@ -105,6 +105,9 @@ model Problem {
   /// Geographical longitude of the problem location.
   longitude Float
 
+  /// problem's status
+  status StatusType @default(OPEN)
+
   // --- Relations ---
 
   /// Foreign Key: Links to the specific type of issue (e.g., "Street Light").
@@ -171,4 +174,9 @@ model Vote {
 enum VoteType {
   CONFIRMATION
   NON_EXISTENT
+}
+
+enum StatusType {
+  OPEN
+  SOLVED
 }

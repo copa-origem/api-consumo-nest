@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
 import { ProblemsService } from './problems.service';
 import { CreateProblemDto } from './dto/create-problem.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Problems')
@@ -40,6 +40,18 @@ export class ProblemsController {
     const userId = req.user.id;
 
     return this.problemsService.findUserProblems(userId);
+  }
+  @Patch(':id/solve')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'update the problem status'})
+  @ApiResponse({ status: 200, description: 'status update with success.'})
+  @ApiResponse({ status: 401, description: 'Unauthorized request'})
+  @ApiResponse({ status: 403, description: 'Invalid token or not forneced'})
+  updateStatus(@Param('id') id: string, @Req() req) {
+
+    const userId = req.user.id;
+
+    return this.problemsService.update(id, userId);
   }
 
   @Delete(':id')
