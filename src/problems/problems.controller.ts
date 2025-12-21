@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
 import { ProblemsService } from './problems.service';
 import { CreateProblemDto } from './dto/create-problem.dto';
 import { AuthGuard } from '../auth/auth.guard';
@@ -23,11 +23,21 @@ export class ProblemsController {
     return this.problemsService.create(userId, createProblemDto);
   }
 
+  @Get('map')
+  @ApiOperation({ summary: 'return the coords from all problems (light)'})
+  @ApiResponse({ status: 200, description: 'List returns with success.'})
+  findAllForMap() {
+    return this.problemsService.findAllForMap();
+  }
+
   @Get()
   @ApiOperation({ summary: 'List all problems registed'})
   @ApiResponse({ status: 200, description: 'List returns with success.'})
-  findAll() {
-    return this.problemsService.findAll();
+  findAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+  ) {
+    return this.problemsService.findAll(page, limit);
   }
 
   @Get('my-problems')

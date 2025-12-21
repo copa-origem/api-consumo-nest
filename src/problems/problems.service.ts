@@ -35,14 +35,50 @@ export class ProblemsService {
     });
   }
 
-  async findAll() {
-    return await this.prisma.problem.findMany ({
-      include: {
-        issueType: true,
-        author: true
+  async findAll(page: number, limit: number) {
+    const skip = (page - 1) * limit;
+
+    const [items, total] = await Promise.all([
+      this.prisma.problem.findMany({
+        skip: skip,
+        take: limit,
+        include: {
+          issueType: true,
+        },
+        orderBy: { createdAt: 'desc'}
+      }),
+
+      this.prisma.problem.count()
+    ]);
+    return {
+      data: items,
+      meta: {
+        total,
+        page,
+        lastPage: Math.ceil(total/limit),
+        limit
+      }
+    };
+  }
+
+  async findAllForMap() {
+    return await this.prisma.problem.findMany({
+      select: {
+        id: true,
+        latitude: true,
+        longitude: true,
+        imageUrl: true,
+        description: true,
+        votesNotExistsCount: true,
+        issueType: {
+          select: {
+            id: true,
+            title: true
+          }
+        }
       },
-      orderBy: {
-        createdAt: 'desc'
+      where: {
+        status: 'OPEN'
       }
     });
   }
