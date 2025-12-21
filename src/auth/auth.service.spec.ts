@@ -53,5 +53,10 @@ describe('AuthGuard', () => {
     );
   });
 
-
+  it('should throw UnauthorizedException if token type is not Bearer', async () => {
+    const context = createMockContext('Basic token123');
+    await expect(guard.canActivate(context)).rejects.toThrow(
+      new UnauthorizedException('Token not given'),
+    );
+  });
 });
