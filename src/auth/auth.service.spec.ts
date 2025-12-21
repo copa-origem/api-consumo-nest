@@ -30,6 +30,18 @@ describe('AuthGuard', () => {
     guard = module.get<AuthGuard>(AuthGuard);
   });
 
+  const createMockContext = (authHeader?: string): ExecutionContext => {
+    return {
+      switchToHttp: () => ({
+        getRequest: () => ({
+          headers: {
+            authorization: authHeader,
+          },
+        }),
+      }),
+    } as unknown as ExecutionContext;
+  };
+
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
