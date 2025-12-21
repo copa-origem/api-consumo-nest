@@ -43,6 +43,15 @@ describe('AuthGuard', () => {
   };
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(guard).toBeDefined();
   });
+
+  it('should throw UnauthorizedException if no token is provided', async () => {
+    const context = createMockContext(undefined);
+    await expect(guard.canActivate(context)).rejects.toThrow(
+      new UnauthorizedException('Token not given'),
+    );
+  });
+
+
 });
