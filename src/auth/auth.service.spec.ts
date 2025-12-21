@@ -79,7 +79,7 @@ describe('AuthGuard', () => {
     });
 
     await expect(guard.canActivate(context)).rejects.toThrow(
-      new UnauthorizedException('invalid token: email not found'),
+      new UnauthorizedException('invalid token or expired'),
     );
   });
 
