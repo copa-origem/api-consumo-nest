@@ -69,6 +69,7 @@ Follow these steps to run the project locally.
   CLOUDINARY_API_KEY="your_api_cloudinary_key"
   CLOUDINARY_API_SECRET="your_cloudinary_api_secret"
   ```
+  **Don't forget to add the firebase-config.json in the root**  
 
 4. **Start the Database**
   Use Docker Compose to spin up the PostgreSQL container:  
