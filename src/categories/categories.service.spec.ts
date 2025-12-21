@@ -28,7 +28,7 @@ describe('CategoriesService', () => {
     expect(service).toBeDefined();
   });
 
-  if('must return a list of categories', async () => {
+  it('must return a list of categories', async () => {
     const fakeCategories = [
       { id: '1', name: 'Holes', createdAt: new Date(), updatedAt: new Date() },
       { id: '2', name: 'light', createdAt: new Date(), updatedAt: new Date() },
