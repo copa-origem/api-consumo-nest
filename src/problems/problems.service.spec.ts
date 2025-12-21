@@ -25,7 +25,7 @@ describe('ProblemsService', () => {
         service = module.get<ProblemsService>(ProblemsService);
     });
 
-    describle('create', () => {
+    describe('create', () => {
         it('must create a problem with image', async () => {
             const userId = 'user-123';
             const dto = {
@@ -147,7 +147,7 @@ describe('ProblemsService', () => {
         });
     });
 
-    describle('handleCronDeleteOldProblems', () => {
+    describe('handleCronDeleteOldProblems', () => {
         it('should call deleteMany for old problems', async () => {
             prismaMock.problem.deleteMany.mockResolvedValue({ count: 5 } as any);
             await service.handleCronDeleteOldProblems();
