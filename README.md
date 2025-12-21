@@ -61,10 +61,13 @@ Follow these steps to run the project locally.
   npm install
   ```
 
-3. **Envirnment Setup**  
+3. **Environment Setup**  
   Create a .env file in the root directory based on .env.example
   ```bash
   DATABASE_URL="postgresql://postgres:password@localhost:5432/mydb?schema=public"
+  CLOUDINARY_NAME="your_cloudinary_name"
+  CLOUDINARY_API_KEY="your_api_cloudinary_key"
+  CLOUDINARY_API_SECRET="your_cloudinary_api_secret"
   ```
 
 4. **Start the Database**
