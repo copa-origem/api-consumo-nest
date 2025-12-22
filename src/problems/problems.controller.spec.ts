@@ -66,5 +66,16 @@ decribe('ProblemsController', () => {
         });
     });
 
+    describe('updateStatus', () => {
+        it('should call service.update with problem id and user id', async () => {
+            const req = { user: { id: 'user-789' } };
+            const problemId = 'prob-1';
+
+            await controller.updateStatus(problemId, req);
+
+            expect(serviceMock.update).toHaveBeenCalledWith(problemId, 'user-789');
+        });
+    });
+
     
 })
