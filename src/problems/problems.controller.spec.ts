@@ -22,4 +22,26 @@ decribe('ProblemsController', () => {
 
         controller = module.get<ProblemsController>(ProblemsController);
     });
+
+    it('should be defined', () => {
+        expect(controller.toBeDefined());
+    });
+
+    describe('create', () => {
+        it('should call service.create with correct data', async () => {
+            const dto: CreateProblemDto = {
+                description: 'Test problem',
+                latitude: 1.23,
+                longitude: 4.56,
+                issueTypeId: 'type-1',
+                imageUrl: 'base64str',
+            };
+            const req = { user: { id: 'user-123' } };
+
+            await controller.create(dto, req);
+
+            expect(serviceMock.create).toHaveBeenCalledWith('user-123', dto);
+        });
+    });
+
 })
