@@ -44,4 +44,11 @@ decribe('ProblemsController', () => {
         });
     });
 
+    describe('findAllForMap', () => {
+        it('should call service.findAllForMap', async () => {
+            await controller.findAllForMap();
+            expect(serviceMock.findAllForMap).toHaveBeenCalled();
+        });
+    });
+    
 })
