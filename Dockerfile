@@ -35,8 +35,8 @@ COPY --from=build /usr/src/app/prisma ./prisma
 #run with the flag
 RUN npm ci --only=production
 
-RUN ./node_modules/.bin/prisma generate
-
+COPY --from=build /usr/src/app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=build /usr/src/app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=build /usr/src/app/dist ./dist
 
 #define the envirement variables
