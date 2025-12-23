@@ -28,15 +28,14 @@ WORKDIR /usr/src/app
 #Copy only the necessary files from the previous step
 COPY --from=build /usr/src/app/package*.json ./
 COPY --from=build /usr/src/app/prisma ./prisma
+COPY --from=build /usr/src/app/dist ./dist
 
 #run with the flag
 RUN npm ci --only=production
 
-#new prisma client
-RUN npx prisma generate
-
 #light dist
-COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=build /usr/src/app/node_modules/@prisma/client ./node_modules/@prisma/client
 
 #define the envirement variables
 ENV NODE_ENV production
