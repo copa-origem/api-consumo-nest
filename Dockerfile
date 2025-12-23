@@ -24,7 +24,7 @@ RUN npm run build
 FROM node:20-alpine AS production
 
 #install OpenSSL and compatibility prisma
-RUN apk add --no-cache openssl compat-openssl11
+RUN apk add --no-cache openssl
 
 WORKDIR /usr/src/app
 
@@ -35,7 +35,7 @@ COPY --from=build /usr/src/app/prisma ./prisma
 #run with the flag
 RUN npm ci --only=production
 
-RUN npx prisma generate
+RUN ./node_modules/.bin/prisma generate
 
 COPY --from=build /usr/src/app/dist ./dist
 
