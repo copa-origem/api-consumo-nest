@@ -23,25 +23,25 @@ The system is deployed on **Microsoft Azure** using a containerized strategy opt
 
 ```mermaid
 graph LR
-    User((User)) --> Vercel[Next.js Frontend]
-    Vercel -- Proxy /api --> Azure[Azure VM (Linux)]
+    User((User)) --> Vercel["Next.js Frontend"]
+    Vercel -- "Proxy /api" --> Azure["Azure VM (Linux)"]
     
-    subgraph Azure Cloud
+    subgraph AzureCloud ["Azure Cloud"]
         direction TB
-        Azure --> Docker[Docker Engine]
+        Azure --> Docker["Docker Engine"]
         
-        subgraph Docker Containers
-            API[NestJS API]
-            DB[(PostgreSQL)]
+        subgraph Containers ["Docker Containers"]
+            API["NestJS API"]
+            DB[("PostgreSQL")]
         end
         
         Docker --> API
         Docker --> DB
-        API -- Network Bridge --> DB
+        API -- "Network Bridge" --> DB
     end
     
-    GitHub[GitHub Repo] -- Actions --> DockerHub[Docker Hub Registry]
-    DockerHub -- Pull Image --> Azure
+    GitHub["GitHub Repo"] -- Actions --> DockerHub["Docker Hub Registry"]
+    DockerHub -- "Pull Image" --> Azure
 ```
 
 ## ☁️ DevOps Highlights
