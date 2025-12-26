@@ -92,7 +92,7 @@ Follow these steps to run the project locally.
 
 ## 📚 API Documentation  
 Once the application is running, you can acces the interactive Swagger documentation at:  
-http://localhost:3000/api/docs
+http://localhost:3000/api
 
 ## 🧪 Running Tests  
 To ensure everything is working correctly, run the test suites:
