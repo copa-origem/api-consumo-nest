@@ -31,17 +31,22 @@ graph LR
         Azure --> Docker["Docker Engine"]
         
         subgraph Containers ["Docker Containers"]
-            API["NestJS API"]
+            API["NestJS API (Hybrid)"]
             DB[("PostgreSQL")]
+            Rabbit[["RabbitMQ (Broker)"]]
         end
         
         Docker --> API
         Docker --> DB
-        API -- "Network Bridge" --> DB
+        Docker --> Rabbit
+        
+        API -- "Read/Write" --> DB
+        API -- "Publish Event" --> Rabbit
+        Rabbit -. "Consume Event" .-> API
     end
     
     GitHub["GitHub Repo"] -- Actions --> DockerHub["Docker Hub Registry"]
-    DockerHub -- "Pull Image" --> Azure
+    DockerHub -- "Pull Images" --> Azure
 ```
 
 ## ☁️ DevOps Highlights
