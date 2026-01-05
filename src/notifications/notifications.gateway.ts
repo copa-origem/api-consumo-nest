@@ -1,8 +1,8 @@
 import {
-    OnGatewayConnection
-    OnGateWayDisconnect,
+    OnGatewayConnection,
+    OnGatewayDisconnect,
     WebSocketGateway,
-    WebSockerServer,
+    WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Injectable, Logger } from '@nestjs/common';
@@ -14,8 +14,8 @@ import * as admin from 'firebase-admin';
         origin: '*', //lembrar de mudar quando for pra produção
     },
 })
-export class NotificationsGateway implements OnGatewayConnection, OnGateWayDisconnect {
-    @WebSockerServer()
+export class NotificationsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+    @WebSocketServer()
     server: Server;
 
     private logger = new Logger('NotificationsGateway');
@@ -52,9 +52,13 @@ export class NotificationsGateway implements OnGatewayConnection, OnGateWayDisco
         }
     }
 
-    notifyUser(UserId: string, event: string, payload: any) {
+    notifyUser(userId: string, event: string, payload: any) {
         this.logger.log(`Sended Event '${event}' to user_${userId}`);
         this.server.to(`user_${userId}`).emit(event, payload);
+    }
+
+    handleDisconnect(client: Socket) {
+        
     }
 
     private extractToken(client: Socket): string | undefined {
