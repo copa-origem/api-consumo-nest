@@ -9,7 +9,7 @@ import { VotesModule } from './votes/votes.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ConfigModule } from '@nestjs/config';
-import { NotificationsGateway } from './notifications/notifications.gateway';
+import { NotificationsModule } from './notifications/notifications.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -27,10 +27,7 @@ import * as Joi from 'joi';
         //port
         PORT: Joi.number().default(3000),
       }),
-    }), PrismaModule, CategoriesModule, AuthModule, ProblemsModule, ScheduleModule.forRoot(), VotesModule, CloudinaryModule
-  ],
-  providers: [
-    NotificationsGateway,
+    }), PrismaModule, CategoriesModule, AuthModule, ProblemsModule, ScheduleModule.forRoot(), VotesModule, CloudinaryModule, NotificationsModule
   ],
 })
 export class AppModule {}
