@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ReportsController } from './reports.controller';
 import { ReportsService } from './reports.service';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
     imports: [
+        NotificationsModule,
         ClientsModule.register([
             {
                 name: 'RABBITMQ_SERVICE',
