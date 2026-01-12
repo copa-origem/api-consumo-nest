@@ -1,5 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import * as PdfPrinter from 'pdfmake';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import * as fs from 'fs';
 
 @Injectable()
 export class ReportsService {
@@ -28,6 +31,12 @@ export class ReportsService {
 
     async generatePdf(filters: any): Promise<string> {
         console.log('Iniciando geração do pdf complexa...');
+
+        const denuncias = [
+            { titulo: 'Buraco na rua x', data: '12/01/2026', status: 'Aberto'},
+            { titulo: 'Luz do poste queimada', data: '11/01/2026', status: 'Resolvido'},
+            { titulo: 'Lixo na calçada', data: '10/01/2026', status: 'Aberto'},
+        ];
 
         await new Promise(resolve => setTimeout(resolve, 5000));
 
