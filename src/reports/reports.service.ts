@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-const PdfPrinter = require('pdfmake/src/printer');
-import { TDocumentDefinitions } from 'pdfmake/interfaces';
+const PDFDocument = require('pdfkit');
 import * as fs from 'fs';
 
 @Injectable()
@@ -32,70 +31,43 @@ export class ReportsService {
     async generatePdf(filters: any): Promise<string> {
         console.log('Iniciando geração do pdf complexa...');
 
-        const denuncias = [
-            { titulo: 'Buraco na rua x', data: '12/01/2026', status: 'Aberto'},
-            { titulo: 'Luz do poste queimada', data: '11/01/2026', status: 'Resolvido'},
-            { titulo: 'Lixo na calçada', data: '10/01/2026', status: 'Aberto'},
-        ];
-
-        const fonts = {
-            Helvetica: {
-                normal: 'Helvetica',
-                bold: 'Helvetica-Bold',
-                italics: 'Helvetica-Oblique',
-                bolditalics: 'Helvetica-BoldOblique',
-            },
-        };
-
-        const printer = new PdfPrinter(fonts);
-
-        const docDefinition: TDocumentDefinitions = {
-            defaultStyle: { font: 'Helvetica' },
-            content: [
-                { text: 'Relatório de Ocorrências Urbanas', style: 'header'},
-                { text: `Gerado em: ${new Date().toLocaleString()}`, style: 'subheader'},
-                { text: '\n\n'},
-
-                {
-                    table: {
-                        widths: ['*', 'auto', 'auto'],
-                        body: [
-                            [
-                                { text: 'Ocorrência', style: 'tableHeader' },
-                                { text: 'Data', style: 'tableHeader'},
-                                { text: 'Status', style: 'tableHeader' }
-                            ],
-                            ...denuncias.map(d => [d.titulo, d.data, d.status])
-                        ]
-                    }
-                }
-            ],
-            styles: {
-                header: {fontSize: 18, bold: true, alignment: 'center', margin: [0, 0, 0, 10] },
-                subheader: {fontSize: 12, italics: true, alignment: 'center' },
-                tableHeader: {bold: true, fontSize: 13, color: 'black', fillColor: '#eeeeee'}
-            }
-        };
-
         return new Promise((resolve, reject) => {
-            const pdfDoc = printer.createPdfKitDocument(docDefinition);
+            // 1. Cria o documento
+            const doc = new PDFDocument();
             const chunks: any[] = [];
 
-            pdfDoc.on('data', (chunk) => chunks.push(chunk));
-
-            pdfDoc.on('end', () => {
+            // 2. Coleta os dados (Buffers)
+            doc.on('data', (chunk) => chunks.push(chunk));
+            
+            doc.on('end', () => {
                 const result = Buffer.concat(chunks);
-
                 const base64Pdf = `data:application/pdf;base64,${result.toString('base64')}`;
-                console.log('pdf real gerado');
+                console.log('✅ PDF (PDFKit) Gerado com sucesso!');
                 resolve(base64Pdf);
             });
 
-            pdfDoc.on('error', (err) => {
-                reject(err);
+            doc.on('error', (err) => reject(err));
+
+            // 3. Desenha o conteúdo
+            doc.fontSize(25).text('Relatório de Ocorrências', 100, 50);
+            
+            doc.moveDown();
+            doc.fontSize(12).text(`Gerado em: ${new Date().toLocaleString()}`);
+            
+            doc.moveDown();
+            doc.text('Filtros aplicados: ' + JSON.stringify(filters));
+
+            doc.moveDown();
+            doc.text('Lista de Ocorrências (Exemplo):');
+            
+            // Simula uma lista
+            const denuncias = ['Buraco na rua', 'Luz queimada', 'Lixo acumulado'];
+            denuncias.forEach((item, index) => {
+                doc.text(`${index + 1}. ${item}`);
             });
 
-            pdfDoc.end();
+            // 4. Finaliza
+            doc.end();
         });
     }
 }
