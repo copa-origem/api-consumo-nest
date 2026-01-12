@@ -35,7 +35,7 @@ export class ReportsController {
         return this.reportsService.requestReport(userId, filters);
     }
 
-    @EventPattern('gerenare-report')
+    @EventPattern('generate-report')
     async handleGenerateReport(@Payload() data: any, @Ctx() context: RmqContext) {
         console.log('Worker recebeu job:', data.jobId);
 
