@@ -41,7 +41,7 @@ export class ReportsController {
 
         const { userId, filters, jobId } = data;
 
-        const pdfUrl = await this.reportsService.generatePDF(filters);
+        const pdfUrl = await this.reportsService.generatePdf(filters);
 
         console.log(`Warning the user ${userId}  by WebSocket...`);
         this.notificationsGateway.notifyUser(userId, 'report_ready', {

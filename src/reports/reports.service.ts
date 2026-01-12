@@ -25,4 +25,14 @@ export class ReportsService {
             status: 'pending'
         };
     }
+
+    async generatePdf(filters: any): Promise<string> {
+        console.log('Iniciando geração do pdf complexa...');
+
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        console.log('Pdf gerado');
+
+        return 'https://cloudinary.com/fake-url-do-relatorio.pdf';
+    }
 }
