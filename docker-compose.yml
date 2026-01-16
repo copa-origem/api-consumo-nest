@@ -25,6 +25,16 @@ services:
       RABBITMQ_DEFAULT_PASS: password
     networks:
       - app_network
+  
+  redis:
+    image: redis:alpine
+    container_name: redis_cache
+    command: redis-server --maxmemory 100mb --maxmemory-policy allkeys-lru --appendonly no
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - app_network
 
 volumes:
   pgdata_prod:
