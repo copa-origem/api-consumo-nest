@@ -18,6 +18,8 @@ services:
     depends_on:
       - db
     environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
       DATABASE_URL: "postgresql://${DB_USER}:${DB_PASS}@db:5432/${DB_NAME}"
       PORT: 3000
     ports:
@@ -35,6 +37,16 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: user
       RABBITMQ_DEFAULT_PASS: password
+  
+  redis:
+    image: redis:alpine
+    container_name: redis_prod
+    command: redis-server --maxmemory 100mb --maxmemory-policy allkeys-lru --appendonly no
+    restart: always
+    expose:
+      - "6379"
+    networks:
+      - app_network
 
 volumes:
   pgdata_prod:
