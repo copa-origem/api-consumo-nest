@@ -46,4 +46,4 @@ ENV NODE_ENV production
 EXPOSE 3000
 
 #cmd to start the aplication in production
-CMD [ "node", "dist/src/main.js" ]
+CMD ["/bin/sh", "-c", "npx prisma migrate deploy && node dist/src/main.js"]
