@@ -134,10 +134,10 @@ Follow these steps to run the project locally.
 ### Installation
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/copa-origem/api-consumo-nest.git
-   cd api-consumo-nest
-   ```
+  ```bash
+  git clone https://github.com/copa-origem/api-consumo-nest.git
+  cd api-consumo-nest
+  ```
 
 2. **Install dependencies**
   ```bash
