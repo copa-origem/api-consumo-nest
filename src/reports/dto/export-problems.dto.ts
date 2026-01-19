@@ -6,10 +6,8 @@ export class ExportReportDto {
     example: {
       status: 'PENDENTE',
       category: 'Buracos',
-      dateRange: {
-        start: '2024-01-01',
-        end: '2024-01-31'
-      }
+      startDate: '2025-12-01',
+      endDate: '2026-01-01'
     },
   })
   filters: any; 

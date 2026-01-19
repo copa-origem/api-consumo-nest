@@ -14,6 +14,7 @@ import { EventPattern, Payload, MessagePattern, Ctx, RmqContext } from '@nestjs/
 import { NotificationsGateway } from '../notifications/notifications.gateway';
 import { Throttle } from '@nestjs/throttler';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ExportReportDto } from './dto/export-problems.dto'
 
 
 @Controller('reports')
@@ -31,7 +32,7 @@ export class ReportsController {
     @ApiResponse({ status: 200, description: 'return the 202 sucess'})
     @HttpCode(HttpStatus.ACCEPTED)
     @Throttle({ default: { limit: 2, ttl: 60000 } })
-    async exportReport(@Req() req, @Body() body: any) {
+    async exportReport(@Req() req, @Body() body: ExportReportDto) {
         const userId = req.user.id;
         const filters = body.filters;
 
