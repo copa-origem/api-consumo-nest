@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { CacheTTL } from '@nestjs/cache-manager';
 
 @ApiTags('Categories')
@@ -19,6 +19,11 @@ export class CategoriesController {
   @Get(':name')
   @ApiOperation({summary: 'List a category by name'})
   @ApiResponse({ status: 200, description: 'List returns with success.'})
+  @ApiParam({
+    name: 'name',
+    example: 'Infraestrutura Urbana',
+    description: 'Nome da categoria (ex: Espaços Públicos, Mobilidade e Transporte, etc.)'
+  })
   findByName(@Param('name') name: string) {
     return this.categoriesService.findByName(name);
   }
