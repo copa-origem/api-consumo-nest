@@ -22,7 +22,7 @@ export class CategoriesController {
   @ApiParam({
     name: 'name',
     enum: ['Espaços Públicos', 'Infraestrutura Urbana', 'Mobilidade e Transporte', 'Saneamento e Meio Ambiente', 'Segurança e Cidadania'],
-    description: 'Nome da categoria (ex: Espaços Públicos, Mobilidade e Transporte, etc.)'
+    description: 'Category name (ex: Espaços Públicos, Mobilidade e Transporte, etc.)'
   })
   findByName(@Param('name') name: string) {
     return this.categoriesService.findByName(name);
