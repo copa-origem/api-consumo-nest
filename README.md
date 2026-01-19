@@ -103,9 +103,13 @@ Follow these steps to run the project locally.
   Create a .env file in the root directory based on .env.example
   ```bash
   DATABASE_URL="postgresql://postgres:password@localhost:5432/mydb?schema=public"
+  DB_USER="your_user_db"
+  DB_PASS="your_db_password"
+  DB_NAME="your_db_name"
   CLOUDINARY_NAME="your_cloudinary_name"
   CLOUDINARY_API_KEY="your_api_cloudinary_key"
   CLOUDINARY_API_SECRET="your_cloudinary_api_secret"
+  RABBITMQ_URL="your_rabbitmq_url"
   ```
   **Don't forget to add the firebase-config.json in the root**  
 
