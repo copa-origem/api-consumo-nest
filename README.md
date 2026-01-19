@@ -196,7 +196,8 @@ To ensure everything is working correctly, run the test suites:
 
 ## 👤 Author  
 **Rafael Silva Rangel de Almeida**  
-- Linkedin: https://www.linkedin.com/in/rafael-silva-rangel-de-almeida-319b942bb/  
+- Linkedin: https://www.linkedin.com/in/rafael-rangel1/  
 - GitHub: @Rafael19722  
+- Portfolio: https://rafaelrangel.vercel.app/  
 
 *Made with 💜 and TypeScript.*
