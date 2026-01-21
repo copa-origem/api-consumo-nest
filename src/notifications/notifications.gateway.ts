@@ -58,6 +58,10 @@ export class NotificationsGateway implements OnGatewayConnection, OnGatewayDisco
         this.logger.log(`Sended Event '${event}' to user_${userId}`);
     }
 
+    notifyAll(event: string, payload: any) {
+        this.server.emit(event, payload);
+    }
+
     handleDisconnect(client: Socket) {
         
     }
