@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { ProblemsService } from './problems.service';
 import { ProblemsController } from './problems.controller';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [
+    NotificationsModule,
     ClientsModule.register([
       {
         name: 'NOTIFICATIONS_SERVICE',

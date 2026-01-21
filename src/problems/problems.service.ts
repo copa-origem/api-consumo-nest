@@ -34,6 +34,9 @@ export class ProblemsService {
           connect: { id: userId }
         }
       },
+      include: {
+        issueType: true,
+      }
     });
 
     this.client.emit('problem_created', {

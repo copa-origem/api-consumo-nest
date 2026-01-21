@@ -35,10 +35,21 @@ export class ProblemsController {
     const userId = req.user.id;
     const result = await this.problemsService.create(userId, createProblemDto);
     await this.cacheManager.clear();
-    this.notificationsGateway.emit('map-update', {
-      message: 'O mapa será atualizado',
-      new: result,
-    });
+
+    const mapPayload = {
+      id: result.id,
+      latitude: result.latitude,
+      longitude: result.longitude,
+      imageUrl: result.imageUrl,
+      description: result.description,
+      votesNotExistsCount: result.votesNotExistsCount,
+      issueType: {
+        id: result.issueType.id,
+        title: result.issueType.title
+      }
+    }
+
+    this.notificationsGateway.notifyAll('map-update', mapPayload);
     return result;
   }
 
