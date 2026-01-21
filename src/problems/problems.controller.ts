@@ -5,12 +5,15 @@ import { AuthGuard } from '../auth/auth.guard';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { NotificationsGateway } from '../notifications/notifications.gateway';
+
 
 @ApiTags('Problems')
 @Controller('problems')
 export class ProblemsController {
   constructor(
     private readonly problemsService: ProblemsService,
+    private readonly notificationsGateway: NotificationsGateway,
     @Inject(CACHE_MANAGER) private cacheManager: any,
   ) {}
 
@@ -32,6 +35,10 @@ export class ProblemsController {
     const userId = req.user.id;
     const result = await this.problemsService.create(userId, createProblemDto);
     await this.cacheManager.clear();
+    this.notificationsGateway.emit('map-update', {
+      message: 'O mapa será atualizado',
+      new: result,
+    });
     return result;
   }
 
