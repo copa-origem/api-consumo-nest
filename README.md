@@ -133,20 +133,19 @@ graph LR
 
 ## 🚀 Getting Started
 
-Follow these steps to run the project locally.
+Follow these steps to run the complete stack locally (API + DB + RabbitMQ + Redis).
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- npm or yarn
-- Docker Desktop installed and running
+- Node.js (v18+)
+- Docker & Docker Compose
 
 ### Installation
 
 1. **Clone the repository**
   ```bash
-  git clone https://github.com/copa-origem/api-consumo-nest.git
-  cd api-consumo-nest
+  git clone https://github.com/copa-origem/alerta-cidadao-api.git
+  cd alerta-cidadao-api
   ```
 
 2. **Install dependencies**
@@ -158,24 +157,20 @@ Follow these steps to run the project locally.
   Create a .env file in the root directory based on .env.example
   ```bash
   DATABASE_URL="postgresql://postgres:password@localhost:5432/mydb?schema=public"
-  DB_USER="your_user_db"
-  DB_PASS="your_db_password"
-  DB_NAME="your_db_name"
   CLOUDINARY_NAME="your_cloudinary_name"
   CLOUDINARY_API_KEY="your_api_cloudinary_key"
   CLOUDINARY_API_SECRET="your_cloudinary_api_secret"
-  RABBITMQ_URL="your_rabbitmq_url"
+  # Default local RabbitMQ connection
+  RABBITMQ_URL="amqp://guest:guest@localhost:5672"
   ```
-  **Don't forget to add the firebase-config.json in the root**  
+> Note: You must place your firebase-config.json in the root folder for JWT Auth to work.
 
-4. **Start the Database**
-  Use Docker Compose to spin up the PostgreSQL container:  
+4. **Start Infrastructure (DB, Rabbit, Redis)**
   ```bash
   docker compose up -d
   ```
 
 5. **Database Migration & Seeding**
-  Push the schema to the database and run the seed script:  
   ```bash
   npx prisma migrate dev
   npx prisma db seed
@@ -185,11 +180,7 @@ Follow these steps to run the project locally.
   ```bash
   npm run start:dev
   ```
-  The server will start at http://localhost:3000.
-
-## 📚 API Documentation  
-Once the application is running, you can acces the interactive Swagger documentation at:  
-http://localhost:3000/api
+  Access Swagger at: http://localhost:3000/api
 
 ## 🧪 Running Tests  
 To ensure everything is working correctly, run the test suites:
